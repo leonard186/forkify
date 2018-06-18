@@ -1,0 +1,33 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "recipe search",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonard186/forkify.git"
+  },
+  "author": "Leonard Ballok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonard186/forkify/issues"
+  },
+  "homepage": "https://github.com/leonard186/forkify#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}
