@@ -3783,19 +3783,19 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _test = __webpack_require__(/*! ./test */ \"./src/js/test.js\");\n\nvar _test2 = _interopRequireDefault(_test);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar y = 22; // Global app controller\n\nconsole.log('This number is ' + _test2.default + ' and y is ' + y);\n\n//# sourceURL=webpack:///./src/js/index.js?");
+eval("\n\nvar _Search = __webpack_require__(/*! ./models/Search */ \"./src/js/models/Search.js\");\n\nvar _Search2 = _interopRequireDefault(_Search);\n\nvar _searchViews = __webpack_require__(!(function webpackMissingModule() { var e = new Error(\"Cannot find module './views/searchViews'\"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// Global app controller\nconsole.log('This is the string ' + _Search2.default + ' check this number out ' + (0, _searchViews.add)(_searchViews.ID, 2) + ' and this number ' + (0, _searchViews.mult)(3, 4));\n\n//# sourceURL=webpack:///./src/js/index.js?");
 
 /***/ }),
 
-/***/ "./src/js/test.js":
-/*!************************!*\
-  !*** ./src/js/test.js ***!
-  \************************/
+/***/ "./src/js/models/Search.js":
+/*!*********************************!*\
+  !*** ./src/js/models/Search.js ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconsole.log('importend module');\nexports.default = 400;\n\n//# sourceURL=webpack:///./src/js/test.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = 'aaa';\n\n//# sourceURL=webpack:///./src/js/models/Search.js?");
 
 /***/ }),
 
