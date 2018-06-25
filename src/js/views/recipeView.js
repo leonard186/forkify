@@ -14,7 +14,6 @@ const formatCount = count => {
 
         if(int === 0) {
             const fr = new Fraction(count);
-            console.log(fr)
             return `${fr.numerator}/${fr.denominator}`;
         } else {
             const fr = new Fraction(count - int);
@@ -24,8 +23,7 @@ const formatCount = count => {
     return '?';
 };
 
-const createIngredient = ingredient => { 
-    return `
+const createIngredient = ingredient => `
     <li class="recipe__item">
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
@@ -36,8 +34,7 @@ const createIngredient = ingredient => {
             ${ingredient.ingredient}
         </div>
     </li>
-    `
-};
+    `;
 
 export const renderRecipe = recipe => {
     const markup = `
@@ -63,12 +60,12 @@ export const renderRecipe = recipe => {
                 <span class="recipe__info-text"> servings</span>
 
                 <div class="recipe__info-buttons">
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-decrease">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-minus"></use>
                         </svg>
                     </button>
-                    <button class="btn-tiny">
+                    <button class="btn-tiny btn-increase">
                         <svg>
                             <use href="img/icons.svg#icon-circle-with-plus"></use>
                         </svg>
@@ -90,7 +87,7 @@ export const renderRecipe = recipe => {
                 ${recipe.ingredients.map(el => createIngredient(el)).join('')}
             </ul>
 
-            <button class="btn-small recipe__btn">
+            <button class="btn-small recipe__btn recipe__btn--add">
                 <svg class="search__icon">
                     <use href="img/icons.svg#icon-shopping-cart"></use>
                 </svg>
@@ -114,4 +111,15 @@ export const renderRecipe = recipe => {
         </div>
     `;
     elements.recipe.insertAdjacentHTML('afterbegin', markup);
+};
+
+export const updateServingsIngredients = recipe => {
+    //Update servings
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+    //Update ingredients
+    const countElements = Array.from(document.querySelectorAll('.recipe__count'));
+    countElements.forEach((el, i) => {
+        el.textContent = formatCount(recipe.ingredients[i].count);
+    })
 };

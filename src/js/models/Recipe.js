@@ -45,7 +45,7 @@ export default class Recipe {
             });
 
             //2. remove parantheses
-            ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
+            ingredient = ingredient.replace(/ *\([^)]*\) */g, " ");
 
             //3. parse ingredients into count, unit and ingredient
             const arrayIngredient = ingredient.split(' ');
@@ -60,13 +60,13 @@ export default class Recipe {
 
                 let count;
                 if(arrayCount.length === 1) {
-                    count = eval(arrayIngredient[0].replace('-', '+'));
+                    count = arrayIngredient[0].replace('-', '+');
                 } else {
                     count = eval(arrayIngredient.slice(0, unitIndex).join('+'));
                 }
 
                 objIng = {
-                    count: count.toFixed(1),
+                    count,
                     unit: arrayIngredient[unitIndex],
                     ingredient: arrayIngredient.slice(unitIndex + 1).join(' ')
                 };
@@ -83,12 +83,23 @@ export default class Recipe {
                 objIng = {
                     count: 1,
                     unit: '',
-                    ingredient
+                    ingredient: ingredient
                 }
             }
 
             return objIng;
         });
         this.ingredients = newIngredients;
+    }
+
+    updateServings(type) {
+        //update Servings
+        const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+        //update Ingredients
+        this.ingredients.forEach(ing => {
+            ing.count *= (newServings / this.servings);
+        });
+
+        this.servings = newServings;
     }
 }
