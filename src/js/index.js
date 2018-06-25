@@ -1,5 +1,7 @@
 import Search from './models/Search';
-import * as searchView from './views/searchView'
+import Recipe from './models/Recipe';
+import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 /** Global state of the app
@@ -10,6 +12,9 @@ import { elements, renderLoader, clearLoader } from './views/base';
  **/
 const state = {}
 
+/**
+ * Search Controller
+ */
 const controlSearch = async () => {
     // 1. Get query from the view
     const query = searchView.getInput();
@@ -23,19 +28,24 @@ const controlSearch = async () => {
         searchView.clearResults();
         renderLoader(elements.searchResult)
 
-        // 4. Search for recipes;
-        await state.search.getResults();
+        try {
+            // 4. Search for recipes;
+            await state.search.getResults();
 
-        // 5. Render results on UI
-        clearLoader();
-        searchView.renderResults(state.search.recipes);
+            // 5. Render results on UI
+            clearLoader();
+            searchView.renderResults(state.search.recipes);
+        } catch(error) {
+            alert('something went wrong with the search ...');
+            clearLoader();
+        }   
     }
 }
 
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
-})
+});
 
 elements.searchResultPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
@@ -44,4 +54,46 @@ elements.searchResultPages.addEventListener('click', e => {
         searchView.clearResults();
         searchView.renderResults(state.search.recipes, goToPage);
     }
-})
+});
+
+/**
+ * Recipe Controller
+ */
+
+ const controlRecipe = async () => {
+     //Get Id from URL
+     const id = window.location.hash.replace('#', '');
+     console.log(id);
+
+     if(id) {
+        //Prepare UI for changes
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
+        //Highlight selected search item
+        if(state.search) searchView.highlightSelected(id)
+
+        //Create new recipe object
+        state.recipe = new Recipe(id);
+        try {
+            //Get recipe data and parse ingredients
+            await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
+
+            //Calculate servings and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+
+            //Render recipe
+            console.log(state.recipe)
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
+
+
+        } catch(error) {
+                alert('Error processing recipe')
+        }
+     }
+ };
+
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
